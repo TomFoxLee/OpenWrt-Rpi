@@ -16,7 +16,7 @@ popd
 # Copy Lean's packages to ./package/lean.
 mkdir package/lean
 pushd package/lede/package/lean
-cp -r {adbyby,automount,baidupcs-web,coremark,ddns-scripts_aliyun,ddns-scripts_dnspod,dns2socks,ipt2socks,ipv6-helper,kcptun,luci-app-adbyby-plus,luci-app-arpbind,luci-app-autoreboot,luci-app-baidupcs-web,luci-app-cifs-mount,luci-app-cpufreq,luci-app-familycloud,luci-app-filetransfer,luci-app-frpc,luci-app-n2n_v2,luci-app-netdata,luci-app-nfs,luci-app-nps,luci-app-ps3netsrv,luci-app-softethervpn,luci-app-usb-printer,luci-app-unblockmusic,luci-app-vsftpd,luci-app-webadmin,luci-app-xlnetacc,luci-lib-fs,microsocks,n2n_v2,npc,pdnsd-alt,proxychains-ng,ps3netsrv,redsocks2,shadowsocksr-libev,simple-obfs,softethervpn5,srelay,tcpping,trojan,UnblockNeteaseMusic,UnblockNeteaseMusicGo,v2ray,v2ray-plugin,vsftpd-alt} "../../../lean"
+cp -r {adbyby,automount,baidupcs-web,coremark,ddns-scripts_aliyun,ddns-scripts_dnspod,dns2socks,ipt2socks,ipv6-helper,kcptun,luci-app-adbyby-plus,luci-app-arpbind,luci-app-autoreboot,luci-app-baidupcs-web,luci-app-cifs-mount,luci-app-cpufreq,luci-app-familycloud,luci-app-filetransfer,luci-app-frpc,luci-app-n2n_v2,luci-app-nfs,luci-app-nft-qos,luci-app-nps,luci-app-ps3netsrv,luci-app-softethervpn,luci-app-usb-printer,luci-app-unblockmusic,luci-app-verysync,luci-app-vsftpd,luci-app-webadmin,luci-app-xlnetacc,luci-lib-fs,microsocks,n2n_v2,npc,pdnsd-alt,proxychains-ng,ps3netsrv,redsocks2,shadowsocksr-libev,simple-obfs,softethervpn5,srelay,tcpping,trojan,UnblockNeteaseMusic,UnblockNeteaseMusicGo,uugamebooster,v2ray-plugin,verysync,vsftpd-alt} "../../../lean"
 popd
 
 # Default settings
@@ -25,12 +25,11 @@ git clone --depth=1 https://github.com/SuLingGG/default-settings
 
 # Add Project OpenWrt's autocore
 rm -rf autocore
-svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore
+svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/lean/autocore
 
 # Add luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld
 rm -rf helloworld/luci-app-ssr-plus/po/zh_Hans
-
 popd
 
 # Clean Lean's code
@@ -61,20 +60,13 @@ git clone -b master --depth=1 https://github.com/vernesong/OpenClash
 # Add luci-app-onliner. (need luci-app-nlbwmon)
 git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
 
-# Add luci-app-adguardhome
-svn co https://github.com/Lienol/openwrt/trunk/package/diy/luci-app-adguardhome
-svn co https://github.com/Lienol/openwrt/trunk/package/diy/adguardhome
-
 # Add openwrt-iptvhelper.
 git clone --depth=1 https://github.com/riverscn/openwrt-iptvhelper
 
 # Add luci-app-diskman.
-git clone --depth=1 https://github.com/lisaac/luci-app-diskman
+git clone --depth=1 https://github.com/SuLingGG/luci-app-diskman
 mkdir parted
 cp luci-app-diskman/Parted.Makefile parted/Makefile
-
-# Add luci-app-gowebdav
-git clone --depth=1 https://github.com/project-openwrt/openwrt-gowebdav
 
 # Add luci-app-jd-dailybonus
 git clone --depth=1 https://github.com/jerrykuku/luci-app-jd-dailybonus
@@ -83,37 +75,31 @@ git clone --depth=1 https://github.com/jerrykuku/luci-app-jd-dailybonus
 git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
 
-# Add smartdns
-svn co https://github.com/pymumu/smartdns/trunk/package/openwrt ../smartdns
-svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/luci-app-smartdns ../luci-app-smartdns
+# Add luci-udptools
+git clone --depth=1 https://github.com/zcy85611/openwrt-luci-kcp-udp
 
-# Add udptools
-git clone --depth=1 https://github.com/bao3/openwrt-udp2raw
-git clone --depth=1 https://github.com/bao3/openwrt-udpspeeder
-git clone --depth=1 https://github.com/bao3/luci-udptools
-
-# luci-app-dockerman
+# Add luci-app-dockerman
 git clone --depth=1 https://github.com/lisaac/luci-app-dockerman
+sed -i 's/+docker-ce/+docker \\\n\t+dockerd/g' luci-app-dockerman/applications/luci-app-dockerman/Makefile
 git clone --depth=1 https://github.com/lisaac/luci-lib-docker
-
-# Add tmate
-git clone --depth=1 https://github.com/project-openwrt/openwrt-tmate
 
 # Add subconverter
 git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
 
+# Add driver for rtl8821cu & rtl8812au-ac
+svn co https://github.com/immortalwrt/immortalwrt/branches/master/package/kernel/rtl8812au-ac
+svn co https://github.com/immortalwrt/immortalwrt/branches/master/package/kernel/rtl8821cu
+popd
+
+# Add netdata
+pushd feeds/packages/admin
+rm -rf netdata
+svn co https://github.com/immortalwrt/packages/branches/master/admin/netdata
 popd
 
 # Mod zzz-default-settings
 pushd package/lean/default-settings/files
-sed -i "/commit luci/i\uci set luci.main.mediaurlbase='/luci-static/argon'" zzz-default-settings
 sed -i '/http/d' zzz-default-settings
-sed -i '/exit/i\chmod +x /bin/ipv6-helper' zzz-default-settings
-popd
-
-# Don't check runc's version for docker-ce
-pushd feeds/packages/utils/docker-ce
-sed -i '/runc.installer/s/^/#/g' Makefile
 popd
 
 # Mod ipv6-helper.sh
@@ -126,16 +112,11 @@ rm -rf ./feeds/packages/net/kcptun
 sed -i 's/16384/65536/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
 
 # Remove IPV6
-sed -i 's/ip6tables //g' include/target.mk
-sed -i 's/odhcpd-ipv6only odhcp6c //g' include/target.mk
+sed -i '/ip6tables/d' include/target.mk
+sed -i '/odhcp/d' include/target.mk
 
 # Change dnsmasq to dnsmasq-full
-sed -i 's/dnsmasq i/dnsmasq-full i/g' include/target.mk
-
-# Add po2lmo
-git clone https://github.com/openwrt-dev/po2lmo.git
-pushd po2lmo
-make && sudo make install
+sed -i 's/dnsmasq/dnsmasq-full/g' include/target.mk
 popd
 
 # Fix mt76 wireless driver
@@ -145,12 +126,6 @@ popd
 
 # Change default shell to zsh
 sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
-
-# Use Lean's golang to fix latest v2ray compile errors
-pushd feeds/packages/lang
-rm -rf golang
-svn co https://github.com/coolsnowwolf/packages/trunk/lang/golang
-popd
 
 # Convert Translation
 cp ../scripts/convert-translation.sh .
